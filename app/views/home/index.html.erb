@@ -1,0 +1,11 @@
+<script type="text/javascript">
+$.ajax({
+  url: '/forecast',
+  data: { latitude: '-27.5800', longitude: '-48.6300' },
+  method: 'GET',
+  success: function(data) {
+    console.log(data);
+  }
+});
+</script>
+<h2> Hello </h2>
