@@ -4,8 +4,30 @@ $.ajax({
   data: { latitude: '-27.5800', longitude: '-48.6300' },
   method: 'GET',
   success: function(data) {
-    console.log(data);
+    $('#temperature').html(data.currently.apparentTemperature);
+    $('#today .summary').html(data.currently.summary);
+    $('#week .summary').html(data.daily.summary);
+
+		var skycons = new Skycons({"color": "black"});
+
+		console.log(data);
+  	skycons.add("today_icon", data.currently.icon);
+  	skycons.add("week_icon", data.daily.icon);
+		skycons.play();
   }
 });
 </script>
-<h2> Hello </h2>
+<div id="weather">
+  <h2> Tempo </h2>
+  <div id="today">
+    <div id="temperature"></div>
+    <canvas id="today_icon" class="icon" width="128" height="128"></canvas>
+    <div class="summary"></div>
+  </div>
+  <div id="week">
+    <canvas id="week_icon" class="icon" width="128" height="128"></canvas>
+    <div class="summary"></div>
+		<div> </div>
+  </div>
+</div>
+
