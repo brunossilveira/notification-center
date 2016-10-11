@@ -20,8 +20,7 @@ $.ajax({
     skycons.add("today_icon", data.currently.icon);
 
     $.each(data.daily.data, function(key, value) {
-      var wrapper = $('<div>', { class: 'week-day'});
-      var canvas = $('<canvas/>', { id: 'week_day_'+key, class: 'icon' }).attr({ 'width': 64, 'height': 64 });
+      var wrapper = $('<div>', { class: 'week-day'}); var canvas = $('<canvas/>', { id: 'week_day_'+key, class: 'icon' }).attr({ 'width': 64, 'height': 64 });
       var weekDay = new Date(value.time*1000);
 
       wrapper.append(days[weekDay.getDay()]);
@@ -44,6 +43,7 @@ $(document).ready(
       }, 30000);
     });
 </script>
+<%= react_component('Forecast') %>
 <div id="weather">
   <h2> Weather </h2>
   <div id="today">
