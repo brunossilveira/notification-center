@@ -1,39 +1,4 @@
 <script type="text/javascript">
-$.ajax({
-  url: '/forecast',
-  data: { latitude: '-27.5800', longitude: '-48.6300' },
-  method: 'GET',
-  success: function(data) {
-    var days = ['Sun','Mon','Tues','Wed','Thrus','Fri','Sat'];
-    var celsius = '&deg;'
-
-    $('#temperature').html(Math.floor(data.currently.apparentTemperature) + celsius);
-    $('#today .summary').html(data.currently.summary);
-    $('#week .summary').html(data.daily.summary);
-
-    var precipProbability = (data.currently.precipProbability*100) + '%';
-    $('#today .probability').html(precipProbability);
-
-    var skycons = new Skycons({"color": "white"});
-
-    console.log(data);
-    skycons.add("today_icon", data.currently.icon);
-
-    $.each(data.daily.data, function(key, value) {
-      var wrapper = $('<div>', { class: 'week-day'}); var canvas = $('<canvas/>', { id: 'week_day_'+key, class: 'icon' }).attr({ 'width': 64, 'height': 64 });
-      var weekDay = new Date(value.time*1000);
-
-      wrapper.append(days[weekDay.getDay()]);
-      wrapper.append(canvas);
-      wrapper.append(Math.floor(value.temperatureMax) + celsius);
-      wrapper.append(Math.floor(value.temperatureMin) + celsius);
-      $('#week').append(wrapper);
-
-      skycons.add('week_day_'+key, value.icon);
-    });
-  }
-});
-
 $(document).ready(
     function() {
       $('#date').load('/date');
@@ -43,20 +8,6 @@ $(document).ready(
       }, 30000);
     });
 </script>
-<%= react_component('Forecast') %>
-<div id="weather">
-  <h2> Weather </h2>
-  <div id="today">
-    <div id="temperature"></div>
-    <canvas id="today_icon" class="icon" width="128" height="128"></canvas>
-    <div class="summary"></div>
-    <div class="probability"></div>
-  </div>
-  <div id="week">
-    <div class="summary"></div>
-    <div> </div>
-  </div>
-</div>
+<%= react_component('Forecast', source: @forecast_url, coordinates: @coordinates) %>
 <div id="date">
 </div>
-<iframe src="https://calendar.google.com/calendar/embed?showTitle= *Calendar*  " style="border-width:0" width="790" height="800" frameborder="0" scrolling="no" id="kallender"></iframe>
